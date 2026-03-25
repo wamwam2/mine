@@ -1,0 +1,428 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Contact — CREATOR.</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+  :root {
+    --lime: #c8ff00;
+    --bg: #080808;
+    --surface: #111111;
+    --border: #1e1e1e;
+    --text: #f0f0f0;
+    --muted: #666;
+    --radius: 16px;
+  }
+  html { scroll-behavior: smooth; }
+  body { font-family: 'Inter', sans-serif; background: var(--bg); color: var(--text); overflow-x: hidden; }
+  a { text-decoration: none; color: inherit; }
+
+  /* NAV */
+  nav {
+    position: fixed; top: 0; width: 100%; z-index: 100;
+    padding: 1.4rem 3rem;
+    display: flex; align-items: center; justify-content: space-between;
+    background: rgba(8,8,8,0.85);
+    backdrop-filter: blur(16px);
+    border-bottom: 1px solid var(--border);
+  }
+  .logo { font-size: 1.1rem; font-weight: 900; letter-spacing: 0.08em; color: var(--lime); }
+  .nav-links { display: flex; gap: 2.5rem; align-items: center; }
+  .nav-links a { font-size: 0.85rem; font-weight: 500; color: var(--muted); letter-spacing: 0.03em; transition: color 0.2s; }
+  .nav-links a:hover, .nav-links a.active { color: var(--text); }
+  .nav-cta {
+    background: var(--lime); color: var(--bg) !important;
+    padding: 0.55rem 1.3rem; border-radius: 50px;
+    font-weight: 700 !important; font-size: 0.82rem !important;
+    transition: opacity 0.2s !important;
+  }
+  .nav-cta:hover { opacity: 0.85; }
+  .hamburger { display: none; flex-direction: column; gap: 5px; cursor: pointer; }
+  .hamburger span { width: 22px; height: 2px; background: var(--text); border-radius: 2px; }
+
+  /* PAGE HEADER */
+  .page-header {
+    padding: 10rem 3rem 4rem;
+    max-width: 1200px; margin: 0 auto;
+    border-bottom: 1px solid var(--border);
+  }
+  .page-label { font-size: 0.75rem; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: var(--lime); margin-bottom: 1rem; }
+  .page-title { font-size: clamp(2.5rem, 6vw, 5rem); font-weight: 900; letter-spacing: -0.03em; line-height: 1.0; }
+  .page-sub { font-size: 1.05rem; color: var(--muted); margin-top: 1rem; max-width: 480px; line-height: 1.7; }
+
+  /* CONTACT LAYOUT */
+  .contact-layout {
+    max-width: 1200px; margin: 0 auto;
+    padding: 5rem 3rem;
+    display: grid; grid-template-columns: 1fr 1fr;
+    gap: 5rem;
+  }
+
+  /* INFO PANEL */
+  .info-section-label { font-size: 0.75rem; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: var(--lime); margin-bottom: 1rem; }
+  .info-title { font-size: clamp(1.6rem, 3vw, 2.2rem); font-weight: 800; letter-spacing: -0.02em; margin-bottom: 1.2rem; }
+  .info-body { font-size: 0.95rem; color: var(--muted); line-height: 1.75; margin-bottom: 2.5rem; }
+
+  .info-items { display: flex; flex-direction: column; gap: 1rem; margin-bottom: 2.5rem; }
+  .info-item {
+    display: flex; align-items: flex-start; gap: 1rem;
+    padding: 1.2rem; border-radius: 12px;
+    background: var(--surface); border: 1px solid var(--border);
+  }
+  .info-icon {
+    width: 40px; height: 40px; border-radius: 10px;
+    background: rgba(200,255,0,0.08); border: 1px solid rgba(200,255,0,0.15);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1.1rem; flex-shrink: 0;
+  }
+  .info-item-label { font-size: 0.75rem; font-weight: 600; color: var(--muted); letter-spacing: 0.06em; text-transform: uppercase; margin-bottom: 0.25rem; }
+  .info-item-value { font-size: 0.92rem; font-weight: 500; }
+
+  .social-links { display: flex; gap: 0.7rem; flex-wrap: wrap; }
+  .social-btn {
+    display: inline-flex; align-items: center; gap: 0.5rem;
+    background: var(--surface); border: 1px solid var(--border);
+    padding: 0.6rem 1.1rem; border-radius: 50px;
+    font-size: 0.83rem; font-weight: 600;
+    transition: border-color 0.2s, background 0.2s;
+  }
+  .social-btn:hover { border-color: rgba(200,255,0,0.3); background: rgba(200,255,0,0.04); }
+
+  /* AVAILABILITY BADGE */
+  .availability {
+    display: inline-flex; align-items: center; gap: 0.6rem;
+    background: rgba(200,255,0,0.06); border: 1px solid rgba(200,255,0,0.2);
+    padding: 0.7rem 1.2rem; border-radius: 12px; margin-bottom: 2rem;
+  }
+  .availability-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--lime); animation: pulse 2s infinite; }
+  @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.4; } }
+  .availability-text { font-size: 0.85rem; font-weight: 600; color: var(--lime); }
+  .availability-sub { font-size: 0.78rem; color: var(--muted); margin-left: 0.2rem; }
+
+  /* FORM PANEL */
+  .form-card {
+    background: var(--surface); border: 1px solid var(--border);
+    border-radius: var(--radius); padding: 2.5rem;
+  }
+  .form-title { font-size: 1.2rem; font-weight: 800; margin-bottom: 0.4rem; }
+  .form-sub { font-size: 0.85rem; color: var(--muted); margin-bottom: 2rem; }
+
+  .form-group { margin-bottom: 1.3rem; }
+  .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 1.3rem; }
+  label { display: block; font-size: 0.78rem; font-weight: 600; color: var(--muted); letter-spacing: 0.06em; text-transform: uppercase; margin-bottom: 0.5rem; }
+  input, textarea, select {
+    width: 100%; background: var(--bg); border: 1px solid var(--border);
+    color: var(--text); padding: 0.85rem 1rem; border-radius: 10px;
+    font-family: 'Inter', sans-serif; font-size: 0.9rem;
+    transition: border-color 0.2s, box-shadow 0.2s;
+    outline: none; appearance: none;
+  }
+  input::placeholder, textarea::placeholder { color: #333; }
+  input:focus, textarea:focus, select:focus {
+    border-color: rgba(200,255,0,0.4);
+    box-shadow: 0 0 0 3px rgba(200,255,0,0.06);
+  }
+  select { cursor: pointer; }
+  select option { background: #111; }
+  textarea { resize: vertical; min-height: 130px; }
+
+  .checkbox-group { display: flex; flex-direction: column; gap: 0.7rem; }
+  .checkbox-label {
+    display: flex; align-items: center; gap: 0.7rem;
+    font-size: 0.87rem; color: var(--muted); cursor: pointer;
+  }
+  .checkbox-label input[type="checkbox"] {
+    width: 18px; height: 18px; border-radius: 5px; padding: 0; flex-shrink: 0;
+    accent-color: var(--lime);
+  }
+
+  .btn-submit {
+    width: 100%; background: var(--lime); color: var(--bg);
+    border: none; padding: 1rem; border-radius: 50px;
+    font-family: 'Inter', sans-serif; font-size: 0.95rem; font-weight: 800;
+    cursor: pointer; letter-spacing: 0.02em;
+    transition: transform 0.2s, box-shadow 0.2s, opacity 0.2s;
+    margin-top: 0.5rem;
+  }
+  .btn-submit:hover { transform: translateY(-2px); box-shadow: 0 8px 30px rgba(200,255,0,0.25); }
+  .btn-submit:active { transform: translateY(0); }
+  .form-note { font-size: 0.78rem; color: var(--muted); text-align: center; margin-top: 1rem; line-height: 1.5; }
+
+  /* SUCCESS MESSAGE */
+  .success-msg {
+    display: none; text-align: center; padding: 2rem;
+  }
+  .success-icon { font-size: 3rem; margin-bottom: 1rem; }
+  .success-msg h3 { font-size: 1.4rem; font-weight: 800; margin-bottom: 0.5rem; }
+  .success-msg p { color: var(--muted); font-size: 0.9rem; }
+
+  /* FAQ */
+  .faq-section {
+    max-width: 1200px; margin: 0 auto;
+    padding: 0 3rem 6rem;
+  }
+  .section-label { font-size: 0.75rem; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: var(--lime); margin-bottom: 1rem; }
+  .section-title { font-size: clamp(1.8rem, 4vw, 2.5rem); font-weight: 800; letter-spacing: -0.02em; margin-bottom: 2.5rem; }
+  .faq-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1px; border: 1px solid var(--border); border-radius: var(--radius); overflow: hidden; }
+  .faq-item {
+    background: var(--surface); padding: 1.8rem 2rem;
+    border-bottom: 1px solid var(--border);
+    cursor: pointer; transition: background 0.2s;
+  }
+  .faq-item:hover { background: #161616; }
+  .faq-item:nth-child(odd) { border-right: 1px solid var(--border); }
+  .faq-item:nth-last-child(-n+2) { border-bottom: none; }
+  .faq-q { font-size: 0.95rem; font-weight: 700; margin-bottom: 0.7rem; }
+  .faq-a { font-size: 0.86rem; color: var(--muted); line-height: 1.65; }
+
+  /* FOOTER */
+  footer {
+    max-width: 1200px; margin: 0 auto;
+    padding: 2.5rem 3rem;
+    display: flex; justify-content: space-between; align-items: center;
+    border-top: 1px solid var(--border);
+  }
+  .footer-links { display: flex; gap: 2rem; }
+  .footer-links a { font-size: 0.82rem; color: var(--muted); transition: color 0.2s; }
+  .footer-links a:hover { color: var(--text); }
+  .footer-copy { font-size: 0.78rem; color: #333; }
+
+  /* MOBILE */
+  @media (max-width: 900px) {
+    nav { padding: 1.2rem 1.5rem; }
+    .nav-links { display: none; }
+    .hamburger { display: flex; }
+    .page-header { padding: 7rem 1.5rem 3rem; }
+    .contact-layout { grid-template-columns: 1fr; gap: 3rem; padding: 3rem 1.5rem; }
+    .faq-section { padding: 0 1.5rem 4rem; }
+    .faq-grid { grid-template-columns: 1fr; }
+    .faq-item:nth-child(odd) { border-right: none; }
+    .faq-item:nth-last-child(-n+2) { border-bottom: 1px solid var(--border); }
+    .faq-item:last-child { border-bottom: none; }
+    .form-row { grid-template-columns: 1fr; }
+    footer { flex-direction: column; gap: 1.5rem; text-align: center; }
+    .footer-links { flex-wrap: wrap; justify-content: center; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="index.html" class="logo">CREATOR.</a>
+  <div class="nav-links">
+    <a href="index.html">Home</a>
+    <a href="work.html">Work</a>
+    <a href="contact.html" class="active">Contact</a>
+    <a href="contact.html" class="nav-cta">Work With Me</a>
+  </div>
+  <div class="hamburger" onclick="toggleMenu()">
+    <span></span><span></span><span></span>
+  </div>
+</nav>
+
+<main>
+
+  <!-- PAGE HEADER -->
+  <div class="page-header">
+    <div class="page-label">Contact</div>
+    <h1 class="page-title">Let's build<br>something real.</h1>
+    <p class="page-sub">Fill out the form and I'll get back within 24 hours. No fluff, no middleman — just us.</p>
+  </div>
+
+  <!-- CONTACT LAYOUT -->
+  <div class="contact-layout">
+
+    <!-- LEFT: INFO -->
+    <div>
+      <div class="availability">
+        <span class="availability-dot"></span>
+        <span class="availability-text">Available</span>
+        <span class="availability-sub">— taking projects now</span>
+      </div>
+
+      <div class="info-section-label">Get In Touch</div>
+      <h2 class="info-title">Not your average creator pitch deck.</h2>
+      <p class="info-body">I respond personally to every inquiry. If your brand is a fit, I'll come back with ideas, not just a rate card. Let's actually talk about what's going to move the needle for you.</p>
+
+      <div class="info-items">
+        <div class="info-item">
+          <div class="info-icon">✉️</div>
+          <div>
+            <div class="info-item-label">Email</div>
+            <div class="info-item-value">hello@creator.com</div>
+          </div>
+        </div>
+        <div class="info-item">
+          <div class="info-icon">⚡</div>
+          <div>
+            <div class="info-item-label">Response Time</div>
+            <div class="info-item-value">Within 24 hours — usually same day</div>
+          </div>
+        </div>
+        <div class="info-item">
+          <div class="info-icon">📍</div>
+          <div>
+            <div class="info-item-label">Location</div>
+            <div class="info-item-value">Los Angeles, CA — shoots anywhere</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="social-links">
+        <a href="#" class="social-btn">📸 Instagram</a>
+        <a href="#" class="social-btn">🎵 TikTok</a>
+        <a href="#" class="social-btn">🐦 Twitter</a>
+        <a href="#" class="social-btn">▶️ YouTube</a>
+      </div>
+    </div>
+
+    <!-- RIGHT: FORM -->
+    <div>
+      <div class="form-card" id="form-card">
+        <h2 class="form-title">Start a project</h2>
+        <p class="form-sub">Tell me what you're looking for and I'll follow up fast.</p>
+
+        <form id="contact-form" onsubmit="handleSubmit(event)" novalidate>
+          <div class="form-row">
+            <div>
+              <label for="fname">First Name</label>
+              <input type="text" id="fname" placeholder="Alex" required>
+            </div>
+            <div>
+              <label for="lname">Last Name</label>
+              <input type="text" id="lname" placeholder="Chen" required>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="email">Email Address</label>
+            <input type="email" id="email" placeholder="alex@yourbrand.com" required>
+          </div>
+
+          <div class="form-group">
+            <label for="brand">Brand / Company</label>
+            <input type="text" id="brand" placeholder="Your Brand Name">
+          </div>
+
+          <div class="form-group">
+            <label for="package">Package Interest</label>
+            <select id="package">
+              <option value="" disabled selected>Select a package...</option>
+              <option value="starter">Starter — $150</option>
+              <option value="growth">Growth — $400</option>
+              <option value="premium">Premium — $900/mo</option>
+              <option value="custom">Custom / Not sure yet</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label>Content Type (select all that apply)</label>
+            <div class="checkbox-group">
+              <label class="checkbox-label">
+                <input type="checkbox" value="fitness"> Fitness / Wellness
+              </label>
+              <label class="checkbox-label">
+                <input type="checkbox" value="comedy"> Comedy / Entertainment
+              </label>
+              <label class="checkbox-label">
+                <input type="checkbox" value="review"> Product Review / Unboxing
+              </label>
+              <label class="checkbox-label">
+                <input type="checkbox" value="lifestyle"> Lifestyle / Vlog Style
+              </label>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="message">Project Details</label>
+            <textarea id="message" placeholder="Tell me about your brand, what you're selling, your target audience, and what kind of content you're imagining. The more detail, the better my response."></textarea>
+          </div>
+
+          <button type="submit" class="btn-submit">Send Message →</button>
+          <p class="form-note">No spam. No selling your info. Just a real reply from me, personally.</p>
+        </form>
+
+        <div class="success-msg" id="success-msg">
+          <div class="success-icon">✅</div>
+          <h3>Message sent!</h3>
+          <p>I'll be in your inbox within 24 hours.<br>Check your spam just in case.</p>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- FAQ -->
+  <div class="faq-section">
+    <div class="section-label">FAQ</div>
+    <h2 class="section-title">Common questions.</h2>
+    <div class="faq-grid">
+      <div class="faq-item">
+        <div class="faq-q">How fast do you deliver?</div>
+        <div class="faq-a">Starter packages in 5 days, Growth in 7 days. Premium clients get priority scheduling with turnarounds as fast as 3 days for urgent content.</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q">Do you post the content yourself?</div>
+        <div class="faq-a">UGC means you own it and post it however you want — ads, organic, your own channels. I can also post natively to my audience for an additional fee.</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q">What if I don't like the content?</div>
+        <div class="faq-a">Every package includes revision rounds. I'll work with you until it's right. In 40+ campaigns I've never had a client not get what they wanted.</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q">Do you work with NSFW or gambling brands?</div>
+        <div class="faq-a">No. I keep it clean — fitness, lifestyle, consumer products, SaaS, and entertainment are my lanes.</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q">Can I use the content in paid ads?</div>
+        <div class="faq-a">Yes. Growth and Premium packages come with a full commercial use license including paid social, display, and programmatic ads.</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q">What do you need from me to start?</div>
+        <div class="faq-a">A brief, your brand guidelines if you have them, and a product sample (if applicable). I handle the rest — concept, scripting, filming, and editing.</div>
+      </div>
+    </div>
+  </div>
+
+</main>
+
+<footer>
+  <a href="index.html" class="logo">CREATOR.</a>
+  <div class="footer-links">
+    <a href="index.html">Home</a>
+    <a href="work.html">Work</a>
+    <a href="contact.html">Contact</a>
+  </div>
+  <span class="footer-copy">© 2026 All rights reserved.</span>
+</footer>
+
+<script>
+  function toggleMenu() {
+    const links = document.querySelector('.nav-links');
+    links.style.display = links.style.display === 'flex' ? 'none' : 'flex';
+    links.style.flexDirection = 'column';
+    links.style.position = 'absolute';
+    links.style.top = '70px';
+    links.style.right = '1.5rem';
+    links.style.background = '#111';
+    links.style.border = '1px solid #1e1e1e';
+    links.style.borderRadius = '12px';
+    links.style.padding = '1rem 1.5rem';
+    links.style.gap = '1rem';
+  }
+
+  function handleSubmit(e) {
+    e.preventDefault();
+    const form = document.getElementById('contact-form');
+    const success = document.getElementById('success-msg');
+    form.style.display = 'none';
+    success.style.display = 'block';
+  }
+</script>
+
+</body>
+</html>
